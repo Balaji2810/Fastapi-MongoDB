@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./services/backend
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./services/backend:/usr/src/app
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/webapp  # Adjust the database name as needed
+    depends_on:
+      - mongo
+  
+  
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
